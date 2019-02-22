@@ -1,13 +1,14 @@
 #ifndef SHELL_H
 #define SHELL_H
+  #include <stdlib.h>
 
   enum CanonicalState {non_canonical_mode, canonical_mode};
 
-  typedef struct {
+  typedef struct ShellState {
     enum CanonicalState canonical_state;
-    int max_cmd_len;
+    size_t max_cmd_len;
   } ShellState;
-  
-  void init_shell_state(ShellState* shell_state, int max_cmd_len);
+
+  void initShellState(ShellState* shell_state, int max_cmd_len);
 
 #endif
