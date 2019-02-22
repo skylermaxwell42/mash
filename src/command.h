@@ -28,7 +28,6 @@
   void initProcess(struct Process* process, char* proc_string);
   void parseInputToProcesses(char* command_split[3], char* string);
   void putCommand(struct Command command);
-  void addCommandToHistory(HistoryQ* historyQ, struct Command* command);
   void removeNewLine(char* string);
   int runCommand(struct Command command);
   int runProcess(struct Process process);

@@ -30,6 +30,7 @@ int main(int argc, char* argv[]) {
 
     /* Running Command */
     runCommand(command);
+    pushHistoryQ(&shell_state.historyQ, command.string_rep);
   }
   return 0;
 }

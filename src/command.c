@@ -4,7 +4,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include "shell.h"
 #include "command.h"
+#include "history.h"
 
 void initCommand(struct Command* command, char* input) {
 
@@ -55,14 +57,6 @@ void putCommand(struct Command command) {
   return;
 }
 
-void addCommandToHistory(HistoryQ* historyQ, struct Command* command){
-  printf("Adding Command to History\n");
-
-  // pop History Q
-  // push History Q
-  return;
-}
-
 int runCommand(struct Command command) {
   for (int i = 0; i < command.num_processes; i++) {
     runProcess(command.processes[i]);
@@ -71,7 +65,6 @@ int runCommand(struct Command command) {
 }
 
 int runProcess(struct Process process) {
-
   pid_t pid;
   pid = fork();
   if (pid == 0) {         // Child
