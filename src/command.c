@@ -58,9 +58,6 @@ void putCommand(struct Command command) {
 
 void addCommandToHistory(HistoryQ* historyQ, struct Command* command){
   printf("Adding Command to History\n");
-
-  // pop History Q
-  // push History Q
   return;
 }
 
