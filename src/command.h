@@ -33,9 +33,10 @@
   void initCommand(struct Command* command);
   void freeCommand(struct Command* command);
   void putCommand(struct Command command);
-  void addCommandToHistory(HistoryQ* historyQ, struct Command* command);
+  void addCommandToHistory(HistoryQ* historyQ, struct Command command);
   void removeNewLine(char* string);
   int runCommand(struct Command* command);
+  int runMashCommand(struct Command* command);
 
 
 #endif

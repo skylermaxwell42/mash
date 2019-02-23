@@ -4,7 +4,7 @@
 #include "history.h"
 #include "command.h"
 
-#define MAX_LEN_HISTORYQ        1
+#define MAX_LEN_HISTORYQ        5
 
 void pushHistoryQ(HistoryQ* qNode, char* command_string) {
   printf("Pushing Q: %s\n", command_string);
@@ -12,12 +12,12 @@ void pushHistoryQ(HistoryQ* qNode, char* command_string) {
     printf("Q FUll\n");
     popHistoryQ(qNode);
   }
-  
+
   HistoryQ new_node = createHistoryQ(command_string);
   printf("Pushed q\n");
   new_node.next = qNode;
   qNode = &new_node;
-  
+
   return;
 }
 
@@ -52,16 +52,16 @@ int getHistoryQLength(HistoryQ* qNode) {
     curr_node = curr_node->next;
     count++;
   }
-  return count-1;
+  return count-1; // for head node
 }
 
 HistoryQ createHistoryQ(char* command_string) {
   HistoryQ qNode;
   initHistoryQ(&qNode);
-  
+
   strcpy(qNode.command, command_string);
   qNode.next = NULL;
-  
+
   return qNode;
 }
 

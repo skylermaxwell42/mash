@@ -9,24 +9,24 @@
 struct Command createCommand(char* user_input) {
   struct Command command ;
   initCommand(&command);
-  
+
   strcpy(command.string_rep, user_input);
   command.num_processes = 1;
   command.async_status = 0;
   command.p_links = 0;
-  
+
   // Initializing individual
   for (int i = 0; i < command.num_processes; i++) {
     command.processes[i] = createProcess(command.string_rep);
   }
-  
+
   return command;
 }
 
 void initCommand(struct Command* command) {
   // Allocating space for dynamically allocated properties
   command->string_rep = malloc(sizeof(char)*MAX_CMD_LENGTH);
-  
+
   if (command->string_rep == NULL) {
     fprintf(stderr, "Could not allocate space for Command struct properties\n");
   }
@@ -42,12 +42,12 @@ void freeCommand(struct Command* command) {
 struct Process createProcess(char* process_string) {
   struct Process process;
   initProcess(&process);
-  
+
   parseInputToProcesses(process.args, process_string);
   //printf("%s_%s_%s\n", process.args[0], process.args[1], process.args[2]);
   process.io_redirect = nil;
   strcpy(process.string_rep, process_string);
-  
+
   return process;
 }
 
@@ -56,17 +56,13 @@ void putCommand(struct Command command) {
   return;
 }
 
-void addCommandToHistory(HistoryQ* historyQ, struct Command* command){
-  printf("Adding Command to History\n");
-  return;
-}
-
 int runCommand(struct Command* command) {
   printf("Processes to run: %d\n", command->num_processes);
+  int processes_run = 0;
   for (int i = 0; i < command->num_processes; i++) {
-    runProcess(&command->processes[i]);
+    processes_run |= runProcess(&command->processes[i]);
   }
-  return 1;
+  return processes_run;
 }
 
 void initProcess(struct Process* process) {
@@ -75,9 +71,9 @@ void initProcess(struct Process* process) {
   for (int i = 0; i < NUM_PROC_ARGS; i++) {
     process->args[i] = malloc(sizeof(char)*MAX_CMD_LENGTH);
   }
-  
+
   printf("Size of strs: %lu\n", sizeof(process->string_rep));
-  
+
   if (process->string_rep == NULL) {
     fprintf(stderr, "Could not allocate space for Process struct properties\n");
   }
@@ -112,19 +108,39 @@ void parseInputToProcesses(char* args[3], char* input) {
 }
 
 int runProcess(struct Process* process) {
-  
+
   pid_t pid;
   pid = fork();
   if (pid == 0) {         // Child
-    printf("%s %s %s\n", process->args[0], process->args[1], process->args[2]);
+    //printf("%s %s %s\n", process->args[0], process->args[1], process->args[2]);
     execvp(process->args[0], process->args);
     printf("FAILED excecuting command\n");
-    return 0;
+    exit(0);
   }
   else if (pid > 0) {     // Parent
     wait(NULL);
-    printf("Back from parent\n");
     return 1;
   }
   return 0;
+}
+
+int runMashCommand(struct Command* command) {
+  if (strcmp(command->string_rep, "cd ..") == 0) {
+    char pathbuf[100];
+    chdir("..");
+    getcwd(pathbuf, 100);
+    printf("cd -> %s\n", pathbuf);
+    return 1;
+  } else if (strcmp(command->string_rep, "clear") == 0) {
+    system("clear");
+    return 1;
+  } else if (strcmp(command->string_rep, "exit") == 0) {
+    printf("Logging out of MASH . . .\n");
+    exit(0);
+  }
+  return 0;
+}
+
+void addCommandToHistory(HistoryQ* historyQ, struct Command command) {
+  pushHistoryQ(historyQ, command.string_rep);
 }
