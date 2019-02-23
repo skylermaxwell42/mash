@@ -9,6 +9,6 @@
     size_t max_cmd_len;
   } ShellState;
 
-  void initShellState(ShellState* shell_state, int max_cmd_len);
+  void initShellState(ShellState* shell_state);
 
 #endif
