@@ -3,7 +3,6 @@
 #include <string.h>
 #include <unistd.h>
 #include "command.h"
-#include "command_handler.h"
 #include "shell.h"
 
 ShellState shell_state;
