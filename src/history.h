@@ -4,11 +4,14 @@
   typedef struct HistoryQ {
     char* command;
     struct HistoryQ* next;
-    struct HistoryQ* prev;
   } HistoryQ;
 
-  void putHistoryQ(HistoryQ* qNode);
   void pushHistoryQ(HistoryQ* qNode, char* command_string);
   void popHistoryQ(HistoryQ* qNode);
+  int getHistoryQLength(HistoryQ* qNode);
+  void initHistoryQ(HistoryQ* qNode);
+  HistoryQ createHistoryQ(char* command_string);
+  int isFull(HistoryQ* qNode);
+  void freeNode(HistoryQ* node);
 
 #endif

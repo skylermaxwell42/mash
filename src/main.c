@@ -33,7 +33,11 @@ int main(int argc, char* argv[]) {
     // DEBUG END
     
     /* Running Command */
-    runCommand(&command);
+    if (runCommand(&command)) {
+      //printf("QQQQ Size: %d\n", getHistoryQLength(&shell_state.historyQ));
+      //pushHistoryQ(&shell_state.historyQ, command.string_rep);
+      //printf("QQQQ Size: %d\n", getHistoryQLength(&shell_state.historyQ));
+    }
     //free(user_input);
     freeCommand(&command);
     
