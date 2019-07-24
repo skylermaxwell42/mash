@@ -1,7 +1,7 @@
 # mash
 Custom command line shell written in C.
 
-To start up the shell run
+To start up the shell run the following commands
 
 ```bash
 make
