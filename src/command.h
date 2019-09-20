@@ -16,14 +16,14 @@
   };
   struct Command {
     char* string_rep;
-    struct Process processes[2];
+    struct Process processes[2]; // Has max two process to represent a piped command 
     int num_processes;
-    int p_links;
-    int async_status;
+    int p_links;                // a represents number of pipes
+    int async_status;           // not used yet
   };
 
   struct Process createProcess(char* process_string);
-  void  initProcess(struct Process* process);
+  void initProcess(struct Process* process);
   void freeProcess(struct Process* process);
   void parseInputToProcesses(char* command_split[3], char* string);
   int runProcess(struct Process* process);

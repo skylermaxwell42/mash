@@ -112,7 +112,8 @@ int runProcess(struct Process* process) {
   pid_t pid;
   pid = fork();
   if (pid == 0) {         // Child
-    //printf("%s %s %s\n", process->args[0], process->args[1], process->args[2]);
+    printf("%s %s %s\n", process->args[0], process->args[1], process->args[2]);
+    printf("%d, %d, %d\n", strlen(process->args[0]), strlen(process->args[1]), strlen(process->args[2]));
     execvp(process->args[0], process->args);
     printf("FAILED excecuting command\n");
     exit(0);
@@ -125,9 +126,9 @@ int runProcess(struct Process* process) {
 }
 
 int runMashCommand(struct Command* command) {
-  if (strcmp(command->string_rep, "cd ..") == 0) {
+  if (strcmp(command->processes->args[0], "cd") == 0) {
     char pathbuf[100];
-    chdir("..");
+    chdir(command->processes->args[1]);
     getcwd(pathbuf, 100);
     printf("cd -> %s\n", pathbuf);
     return 1;
